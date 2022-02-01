@@ -7,10 +7,10 @@ export default function NabBar() {
   return (
     <nav>
       <Link href="/">
-        <a>Home</a>
+        <a className={router.pathname === "/" ? "active" : ""}>Home</a>
       </Link>
       <Link href="/about">
-        <a>About</a>
+        <a className={router.pathname === "/about" ? "active" : ""}>About</a>
       </Link>
       <style jsx>{`
         nav {
@@ -18,6 +18,9 @@ export default function NabBar() {
         }
         a {
           text-decoration: none;
+        }
+        .active {
+          color: yellow;
         }
       `}</style>
     </nav>
