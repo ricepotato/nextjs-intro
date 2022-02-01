@@ -1,9 +1,21 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 
 const API_KEY = "7539a2083cc4f7d9dc5e72dc2d0091e4";
 
 export default function Home({ results }) {
+  const router = useRouter();
+  const onClick = (id, title) => {
+    router.push(
+      {
+        pathname: `/movies/${id}`,
+        query: { title },
+      },
+      `/movies/${id}`
+    );
+  };
   const [movies, setMovies] = useState();
   useEffect(() => {
     (async () => {
@@ -19,9 +31,25 @@ export default function Home({ results }) {
       {!movies && <h4>Loading...</h4>}
       {/* {movies?.map((movie) => ( client side render */}
       {results?.map((movie) => (
-        <div className="movie" key={movie.id}>
+        <div
+          onClick={() => onClick(movie.id, movie.original_title)}
+          className="movie"
+          key={movie.id}
+        >
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-          <h4>{movie.original_title}</h4>
+          <Link
+            passHref
+            href={{
+              pathname: `/movies/${movie.id}`,
+              query: { title: movie.original_title },
+            }}
+            as={`/movies/${movie.id}`}
+            key={movie.id}
+          >
+            <h4>
+              <a>{movie.original_title}</a>
+            </h4>
+          </Link>
         </div>
       ))}
       <style jsx>{`
