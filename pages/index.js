@@ -8,13 +8,7 @@ const API_KEY = "7539a2083cc4f7d9dc5e72dc2d0091e4";
 export default function Home({ results }) {
   const router = useRouter();
   const onClick = (id, title) => {
-    router.push(
-      {
-        pathname: `/movies/${id}`,
-        query: { title },
-      },
-      `/movies/${id}`
-    );
+    router.push(`/movies/${title}/${id}`);
   };
   const [movies, setMovies] = useState();
   useEffect(() => {
@@ -39,11 +33,7 @@ export default function Home({ results }) {
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           <Link
             passHref
-            href={{
-              pathname: `/movies/${movie.id}`,
-              query: { title: movie.original_title },
-            }}
-            as={`/movies/${movie.id}`}
+            href={`/movies/${movie.original_title}/${movie.id}`}
             key={movie.id}
           >
             <h4>
